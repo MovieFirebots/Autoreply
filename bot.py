@@ -1,9 +1,9 @@
 import asyncio
 from telegram import Update
 from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, CallbackContext
-from telegram.ext import filters  # Updated import for filters
+from telegram.ext import filters  # Correct import for filters
 
-   # Function to format the reply based on user input
+# Function to format the reply based on user input
 def format_reply(user_message):
     lines = user_message.splitlines()
     if not lines or len(lines) < 1:
@@ -12,9 +12,8 @@ def format_reply(user_message):
     episode_number = lines[0].strip()
     links = [line.strip() for line in lines[1:] if line.strip()]
 
-       # Create HTML formatted reply
-    reply = f'<h3 class="episode-title">Episode {episode_number} </h3>n'
-    reply += '    </div>n'
+    # Create HTML formatted reply
+    reply = f'<h3 class="episode-title">Episode {episode_number}</h3>n'
     reply += '    <div class="download-box" id="download1" style="display: none;">n'
     reply += '        <p>WATCH/DOWNLOAD:</p>n'
 
@@ -25,28 +24,21 @@ def format_reply(user_message):
     reply += '    </div>'
     return reply
 
-   # Function to handle incoming messages
-def handle_message(update: Update, context: CallbackContext):
+# Function to handle incoming messages
+async def handle_message(update: Update, context: CallbackContext):
     user_message = update.message.text
     reply_message = format_reply(user_message)
-    update.message.reply_text(reply_message, parse_mode='HTML')
+    await update.message.reply_text(reply_message, parse_mode='HTML')
 
-def main():
-       # Replace 'YOUR_TOKEN_HERE' with your bot's API token
-    updater = Updater("7204165447:AAGPA6vxvB8sDDZveuHWf53NGb378aepgN8")
+async def main():
+    # Replace 'YOUR_TOKEN_HERE' with your bot's API token
+    app = ApplicationBuilder().token("7204165447:AAGPA6vxvB8sDDZveuHWf53NGb378aepgN8").build()
 
-       # Get the dispatcher to register handlers
-    dp = updater.dispatcher
+    # Handle text messages
+    app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
 
-       # Handle text messages
-    dp.add_handler(MessageHandler(Filters.text & ~Filters.command, handle_message))
-
-       # Start the Bot
-    updater.start_polling()
-
-       # Run the bot until you press Ctrl-C
-    updater.idle()
+    # Start the Bot
+    await app.run_polling()
 
 if __name__ == '__main__':
-    main()
-   
+    asyncio.run(main())
