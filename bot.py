@@ -31,7 +31,7 @@
 
    def main():
        # Replace 'YOUR_TOKEN_HERE' with your bot's API token
-       updater = Updater("YOUR_TOKEN_HERE")
+       updater = Updater("7204165447:AAGPA6vxvB8sDDZveuHWf53NGb378aepgN8")
 
        # Get the dispatcher to register handlers
        dp = updater.dispatcher
