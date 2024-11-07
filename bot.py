@@ -2,8 +2,6 @@ from telegram import Update
 from telegram.ext import Updater, CommandHandler, MessageHandler, CallbackContext
 from telegram.ext import filters  # Updated import for filters
 
-message_handler = MessageHandler(filters.TEXT & (~filters.COMMAND), your_handler_function)
- 
    # Function to format the reply based on user input
 def format_reply(user_message):
     lines = user_message.splitlines()
