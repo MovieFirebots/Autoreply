@@ -1,5 +1,5 @@
-   from telegram import Update
-   from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
+from telegram import Update
+from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
 
    # Function to format the reply based on user input
    def format_reply(user_message):
