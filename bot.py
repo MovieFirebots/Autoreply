@@ -1,4 +1,5 @@
 import asyncio
+import os  # Import os to use environment variables
 from telegram import Update
 from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, CallbackContext
 from telegram.ext import filters  # Correct import for filters
@@ -31,8 +32,9 @@ async def handle_message(update: Update, context: CallbackContext):
     await update.message.reply_text(reply_message, parse_mode='HTML')
 
 async def main():
-    # Replace 'YOUR_TOKEN_HERE' with your bot's API token
-    app = ApplicationBuilder().token("7204165447:AAGPA6vxvB8sDDZveuHWf53NGb378aepgN8").build()
+    # Use environment variable for the bot's API token
+    token = os.getenv("7204165447:AAGPA6vxvB8sDDZveuHWf53NGb378aepgN8")
+    app = ApplicationBuilder().token(token).build()
 
     # Handle text messages
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
@@ -40,13 +42,12 @@ async def main():
     # Start the Bot
     await app.run_polling()
 
-if __name__ == "__main__":
+if __name__ == "__main__":  # Corrected line
     try:
         asyncio.run(main())
     except RuntimeError as e:
         if str(e) == "This event loop is already running":
-               # If the event loop is already running, we can directly await main()
+            # If the event loop is already running, we can directly await main()
             asyncio.get_event_loop().run_until_complete(main())
         else:
             raise
-   
