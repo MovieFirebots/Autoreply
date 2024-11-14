@@ -33,7 +33,10 @@ async def handle_message(update: Update, context: CallbackContext):
 
 async def main():
     # Use environment variable for the bot's API token
-    token = os.getenv("7204165447:AAGPA6vxvB8sDDZveuHWf53NGb378aepgN8")
+    token = os.getenv("TELEGRAM_BOT_TOKEN")  # Change this to your actual environment variable name
+    if not token:
+        raise ValueError("No token found. Please set the TELEGRAM_BOT_TOKEN environment variable.")
+    
     app = ApplicationBuilder().token(token).build()
 
     # Handle text messages
